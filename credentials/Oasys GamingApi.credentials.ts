@@ -1,54 +1,29 @@
-import { ICredentialType, INodeProperties } from 'n8n-workflow';
+import {
+	ICredentialType,
+	INodeProperties,
+} from 'n8n-workflow';
 
 export class OasysGamingApi implements ICredentialType {
 	name = 'oasysGamingApi';
 	displayName = 'Oasys Gaming API';
-	documentationUrl = 'https://docs.oasys.games/';
+	documentationUrl = 'https://docs.oasys.games/docs/verse-developer/rpc-endpoint';
 	properties: INodeProperties[] = [
 		{
-			displayName: 'Environment',
-			name: 'environment',
-			type: 'options',
-			options: [
-				{
-					name: 'Mainnet',
-					value: 'mainnet',
-				},
-				{
-					name: 'Testnet',
-					value: 'testnet',
-				},
-			],
-			default: 'mainnet',
-			required: true,
-			description: 'Choose the Oasys network environment',
+			displayName: 'API Key',
+			name: 'apiKey',
+			type: 'string',
+			typeOptions: { password: true },
+			default: '',
+			description: 'API key for premium Oasys Gaming RPC endpoints',
+			required: false,
 		},
 		{
 			displayName: 'RPC URL',
 			name: 'rpcUrl',
 			type: 'string',
 			default: 'https://rpc.mainnet.oasys.games',
+			description: 'Base URL for Oasys Gaming RPC endpoint',
 			required: true,
-			description: 'The RPC endpoint URL for Oasys network',
-		},
-		{
-			displayName: 'Private Key',
-			name: 'privateKey',
-			type: 'string',
-			typeOptions: {
-				password: true,
-			},
-			default: '',
-			required: true,
-			description: 'Private key for signing transactions on Oasys network',
-		},
-		{
-			displayName: 'Wallet Address',
-			name: 'walletAddress',
-			type: 'string',
-			default: '',
-			required: true,
-			description: 'The wallet address associated with the private key',
 		},
 	];
 }
