@@ -8,25 +8,25 @@
 >
 > For licensing information, visit https://velobpa.com/licensing or contact licensing@velobpa.com.
 
-This community node provides comprehensive integration with the Oasys Gaming blockchain ecosystem through n8n. It includes 4 resources with extensive operations for managing staking, verse layers, cross-layer bridging, and game assets within the Oasys network.
+An n8n community node for interacting with the Oasys blockchain gaming ecosystem. This node provides 6 comprehensive resources for managing gaming-focused blockchain operations including account management, transaction processing, block data retrieval, staking operations, cross-chain bridging, and verse layer interactions.
 
 ![n8n Community Node](https://img.shields.io/badge/n8n-Community%20Node-blue)
 ![License](https://img.shields.io/badge/license-BSL--1.1-blue)
 ![TypeScript](https://img.shields.io/badge/TypeScript-5.3-blue)
-![Oasys](https://img.shields.io/badge/Oasys-Gaming%20Blockchain-green)
-![Web3](https://img.shields.io/badge/Web3-Gaming-purple)
-![Layer2](https://img.shields.io/badge/Layer2-Scalable-orange)
+![Blockchain](https://img.shields.io/badge/Blockchain-Oasys-green)
+![Gaming](https://img.shields.io/badge/Gaming-Web3-purple)
+![DeFi](https://img.shields.io/badge/DeFi-Staking-orange)
 
 ## Features
 
-- **Staking Management** - Complete staking operations including delegation, rewards claiming, and validator management
-- **Verse Layer Operations** - Deploy and manage custom gaming verse layers with configurable parameters
-- **Cross-Layer Bridging** - Seamless asset transfers between Hub Layer and Verse Layers with transaction tracking
-- **Game Asset Management** - Mint, transfer, and manage NFTs and fungible tokens for gaming applications
-- **Multi-Network Support** - Works with Oasys mainnet and testnet environments
-- **Real-time Monitoring** - Track transaction status, staking rewards, and bridge operations
-- **Batch Operations** - Perform multiple operations efficiently with built-in error handling
-- **Gas Optimization** - Smart gas estimation and fee management for cost-effective transactions
+- **Account Management** - Create, retrieve, and manage Oasys gaming accounts with balance tracking and transaction history
+- **Transaction Processing** - Send, receive, and monitor blockchain transactions with gaming-specific metadata handling
+- **Block Data Access** - Query block information, transaction lists, and network statistics for analysis and monitoring
+- **Staking Operations** - Manage validator staking, delegation, rewards claiming, and staking pool interactions
+- **Bridge Functionality** - Execute cross-chain transfers between Oasys Hub Layer and various Verse Layers
+- **Verse Layer Integration** - Interact with game-specific verse layers including smart contract deployment and execution
+- **Real-time Monitoring** - Track network events, transaction confirmations, and validator activities
+- **Gaming Analytics** - Access gaming-specific metrics, player statistics, and tokenomics data
 
 ## Installation
 
@@ -61,112 +61,116 @@ n8n start
 
 | Field | Description | Required |
 |-------|-------------|----------|
-| API Key | Your Oasys Gaming API key for authentication | Yes |
-| Network | Network environment (mainnet, testnet) | Yes |
-| Private Key | Wallet private key for transaction signing | Yes |
-| RPC Endpoint | Custom RPC endpoint (optional, uses default if not provided) | No |
+| API Key | Your Oasys API key for authentication | Yes |
+| Environment | Network environment (mainnet/testnet) | Yes |
+| Endpoint URL | Custom RPC endpoint URL (optional) | No |
 
 ## Resources & Operations
 
-### 1. Staking Operations
+### 1. Account
 
 | Operation | Description |
 |-----------|-------------|
-| Delegate Tokens | Delegate OAS tokens to a validator |
-| Undelegate Tokens | Remove delegated tokens from a validator |
-| Claim Rewards | Claim accumulated staking rewards |
-| Get Staking Info | Retrieve current staking status and rewards |
-| List Validators | Get list of available validators with performance metrics |
-| Get Validator Details | Retrieve detailed information about a specific validator |
-| Check Delegation Status | Verify delegation status and amounts |
-| Calculate Rewards | Estimate potential staking rewards |
+| Get Account | Retrieve account information including balance and transaction count |
+| Create Account | Generate new Oasys gaming account with private key management |
+| Get Balance | Check OAS token balance for specific account |
+| Get Transaction History | Fetch paginated transaction history for account |
+| Get Nonce | Retrieve current nonce value for transaction signing |
 
-### 2. Verse Layer Management
+### 2. Transaction
 
 | Operation | Description |
 |-----------|-------------|
-| Deploy Verse | Deploy a new verse layer with custom configuration |
-| Update Verse Config | Modify verse layer parameters and settings |
-| Get Verse Info | Retrieve verse layer details and status |
-| List Verses | Get all deployed verse layers |
-| Pause Verse | Temporarily pause verse layer operations |
-| Resume Verse | Resume paused verse layer operations |
-| Delete Verse | Permanently remove a verse layer |
-| Monitor Verse Health | Check verse layer performance metrics |
+| Send Transaction | Broadcast signed transaction to Oasys network |
+| Get Transaction | Retrieve transaction details by hash |
+| Get Transaction Receipt | Fetch transaction receipt with execution status |
+| Estimate Gas | Calculate gas requirements for transaction execution |
+| Sign Transaction | Create signed transaction without broadcasting |
+| Get Pending Transactions | List pending transactions in mempool |
 
-### 3. Cross Layer Bridging
+### 3. Block
 
 | Operation | Description |
 |-----------|-------------|
-| Bridge To Verse | Transfer assets from Hub Layer to Verse Layer |
-| Bridge To Hub | Transfer assets from Verse Layer to Hub Layer |
-| Get Bridge Status | Check status of bridge transactions |
-| List Bridge History | Retrieve bridge transaction history |
-| Estimate Bridge Fees | Calculate bridge transaction costs |
-| Cancel Bridge | Cancel pending bridge transaction |
-| Fast Bridge | Perform expedited bridge transfer |
-| Batch Bridge | Bridge multiple assets in a single transaction |
+| Get Block | Retrieve block information by number or hash |
+| Get Latest Block | Fetch most recent block data |
+| Get Block Transactions | List all transactions in specific block |
+| Get Block Range | Query multiple blocks within specified range |
+| Get Network Stats | Retrieve network statistics and performance metrics |
 
-### 4. Game Asset Management
+### 4. Staking
 
 | Operation | Description |
 |-----------|-------------|
-| Mint NFT | Create new NFTs for games |
-| Transfer NFT | Transfer NFT between addresses |
-| Mint Tokens | Create fungible game tokens |
-| Transfer Tokens | Transfer fungible tokens |
-| Get Asset Info | Retrieve asset metadata and ownership |
-| List Assets | Get assets owned by an address |
-| Burn Asset | Permanently destroy an asset |
-| Set Asset Metadata | Update NFT metadata |
-| Approve Asset | Approve asset transfers for marketplace |
-| Get Asset History | Retrieve asset transaction history |
+| Stake Tokens | Delegate OAS tokens to validator node |
+| Unstake Tokens | Initiate token unstaking process |
+| Claim Rewards | Collect accumulated staking rewards |
+| Get Validator Info | Retrieve validator node details and statistics |
+| Get Staking Balance | Check delegated stake amount and pending rewards |
+| List Validators | Fetch all active validators with performance metrics |
+
+### 5. Bridge
+
+| Operation | Description |
+|-----------|-------------|
+| Bridge To Verse | Transfer tokens from Hub Layer to Verse Layer |
+| Bridge To Hub | Transfer tokens from Verse Layer to Hub Layer |
+| Get Bridge Status | Check status of cross-chain transfer |
+| Get Bridge History | Retrieve bridge transaction history |
+| Estimate Bridge Fee | Calculate fees for cross-chain transfers |
+
+### 6. VerseLayer
+
+| Operation | Description |
+|-----------|-------------|
+| Deploy Contract | Deploy smart contract to specific Verse Layer |
+| Call Contract | Execute read operation on deployed contract |
+| Send Contract Transaction | Execute write operation on deployed contract |
+| Get Verse Info | Retrieve Verse Layer configuration and statistics |
+| List Active Verses | Fetch all available Verse Layers |
+| Get Game Metrics | Access game-specific analytics and player data |
 
 ## Usage Examples
 
 ```javascript
-// Delegate tokens to a validator
+// Get account balance and transaction history
 {
-  "operation": "delegateTokens",
-  "validatorAddress": "0x1234567890abcdef1234567890abcdef12345678",
-  "amount": "1000",
-  "network": "mainnet"
+  "address": "0x742d35Cc6635C0532925a3b8D9b9EfE9C2C3e4D7",
+  "includeHistory": true,
+  "limit": 50
 }
 ```
 
 ```javascript
-// Deploy a new verse layer for a game
+// Send gaming transaction with metadata
 {
-  "operation": "deployVerse",
-  "verseName": "MyGameVerse",
-  "gameContract": "0xabcdef1234567890abcdef1234567890abcdef12",
-  "stakingAmount": "10000",
-  "validators": 5
-}
-```
-
-```javascript
-// Bridge game tokens to verse layer
-{
-  "operation": "bridgeToVerse",
-  "tokenAddress": "0x9876543210fedcba9876543210fedcba98765432",
-  "amount": "500",
-  "verseId": "verse_12345",
-  "recipient": "0xfedcba0987654321fedcba0987654321fedcba09"
-}
-```
-
-```javascript
-// Mint gaming NFTs
-{
-  "operation": "mintNFT",
-  "contractAddress": "0x5555666677778888999900001111222233334444",
-  "recipient": "0x1111222233334444555566667777888899990000",
-  "tokenURI": "https://mygame.com/nft/metadata/123",
-  "attributes": {
-    "rarity": "legendary",
-    "power": 95
+  "to": "0x123abc...",
+  "value": "1000000000000000000",
+  "gameId": "racing-legends",
+  "itemId": "legendary-car-nft",
+  "metadata": {
+    "action": "purchase",
+    "rarity": "legendary"
   }
+}
+```
+
+```javascript
+// Stake tokens to validator
+{
+  "validatorAddress": "0x456def...",
+  "amount": "5000000000000000000000",
+  "duration": "30d"
+}
+```
+
+```javascript
+// Bridge tokens to verse layer
+{
+  "amount": "100000000000000000000",
+  "verseId": "sandbox-verse-01",
+  "recipient": "0x789ghi...",
+  "gameContractAddress": "0xabc123..."
 }
 ```
 
@@ -174,12 +178,12 @@ n8n start
 
 | Error | Description | Solution |
 |-------|-------------|----------|
-| INVALID_API_KEY | API key is missing or invalid | Verify API key in credentials configuration |
-| INSUFFICIENT_BALANCE | Wallet has insufficient funds for transaction | Check wallet balance and ensure adequate OAS tokens |
-| NETWORK_ERROR | Connection to Oasys network failed | Check network status and RPC endpoint configuration |
-| TRANSACTION_FAILED | Blockchain transaction was rejected | Verify transaction parameters and gas settings |
-| BRIDGE_TIMEOUT | Bridge operation exceeded timeout limit | Check bridge status and retry if necessary |
-| VERSE_NOT_FOUND | Specified verse layer does not exist | Verify verse ID and deployment status |
+| Invalid API Key | Authentication failed with provided credentials | Verify API key is correct and active |
+| Insufficient Balance | Account lacks funds for transaction | Check account balance and add funds |
+| Gas Limit Exceeded | Transaction requires more gas than specified | Increase gas limit or optimize transaction |
+| Validator Not Found | Specified validator address doesn't exist | Use List Validators to find active validators |
+| Bridge Limit Exceeded | Transfer amount exceeds bridge limits | Check bridge limits and split transfer |
+| Verse Layer Unavailable | Target verse layer is offline or maintenance | Check verse status and retry later |
 
 ## Development
 
@@ -224,5 +228,5 @@ Contributions are welcome! Please ensure:
 ## Support
 
 - **Issues**: [GitHub Issues](https://github.com/Velocity-BPA/n8n-nodes-oasys-gaming/issues)
-- **Oasys Documentation**: [Oasys Developer Docs](https://docs.oasys.games)
-- **Oasys Discord**: [Oasys Gaming Community](https://discord.gg/oasys)
+- **Oasys Documentation**: [Oasys Developer Portal](https://docs.oasys.games)
+- **Gaming Community**: [Oasys Discord](https://discord.gg/oasys)
