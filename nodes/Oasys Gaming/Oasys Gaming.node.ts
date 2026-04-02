@@ -41,13 +41,36 @@ export class OasysGaming implements INodeType {
       },
     ],
     properties: [
-      // Resource selector
       {
         displayName: 'Resource',
         name: 'resource',
         type: 'options',
         noDataExpression: true,
         options: [
+          {
+            name: 'Account',
+            value: 'account',
+          },
+          {
+            name: 'Transaction',
+            value: 'transaction',
+          },
+          {
+            name: 'Block',
+            value: 'block',
+          },
+          {
+            name: 'Staking',
+            value: 'staking',
+          },
+          {
+            name: 'Bridge',
+            value: 'bridge',
+          },
+          {
+            name: 'VerseLayer',
+            value: 'verseLayer',
+          },
           {
             name: 'StakingOperations',
             value: 'stakingOperations',
@@ -65,9 +88,125 @@ export class OasysGaming implements INodeType {
             value: 'gameAssetManagement',
           }
         ],
-        default: 'stakingOperations',
+        default: 'account',
       },
-      // Operation dropdowns per resource
+{
+  displayName: 'Operation',
+  name: 'operation',
+  type: 'options',
+  noDataExpression: true,
+  displayOptions: { show: { resource: ['account'] } },
+  options: [
+    { name: 'Get Balance', value: 'getBalance', description: 'Get account balance in OAS tokens', action: 'Get balance' },
+    { name: 'Get Transaction Count', value: 'getTransactionCount', description: 'Get account nonce/transaction count', action: 'Get transaction count' },
+    { name: 'Get Code', value: 'getCode', description: 'Get contract code at address', action: 'Get code' },
+    { name: 'List Accounts', value: 'listAccounts', description: 'List available accounts', action: 'List accounts' }
+  ],
+  default: 'getBalance',
+},
+{
+	displayName: 'Operation',
+	name: 'operation',
+	type: 'options',
+	noDataExpression: true,
+	displayOptions: {
+		show: {
+			resource: ['transaction'],
+		},
+	},
+	options: [
+		{
+			name: 'Send Transaction',
+			value: 'sendTransaction',
+			description: 'Send a transaction to the Oasys blockchain',
+			action: 'Send transaction',
+		},
+		{
+			name: 'Send Raw Transaction',
+			value: 'sendRawTransaction',
+			description: 'Send a signed raw transaction to the Oasys blockchain',
+			action: 'Send raw transaction',
+		},
+		{
+			name: 'Get Transaction',
+			value: 'getTransaction',
+			description: 'Get transaction details by hash',
+			action: 'Get transaction',
+		},
+		{
+			name: 'Get Transaction Receipt',
+			value: 'getTransactionReceipt',
+			description: 'Get transaction receipt by hash',
+			action: 'Get transaction receipt',
+		},
+		{
+			name: 'Estimate Gas',
+			value: 'estimateGas',
+			description: 'Estimate gas required for a transaction',
+			action: 'Estimate gas',
+		},
+	],
+	default: 'sendTransaction',
+},
+{
+  displayName: 'Operation',
+  name: 'operation',
+  type: 'options',
+  noDataExpression: true,
+  displayOptions: { show: { resource: ['block'] } },
+  options: [
+    { name: 'Get Block By Number', value: 'getBlockByNumber', description: 'Get block information by block number', action: 'Get block by number' },
+    { name: 'Get Block By Hash', value: 'getBlockByHash', description: 'Get block information by block hash', action: 'Get block by hash' },
+    { name: 'Get Current Block Number', value: 'getCurrentBlockNumber', description: 'Get the current block number', action: 'Get current block number' },
+    { name: 'Get Block Transaction Count', value: 'getBlockTransactionCount', description: 'Get transaction count in a block by block number', action: 'Get block transaction count' }
+  ],
+  default: 'getBlockByNumber',
+},
+{
+  displayName: 'Operation',
+  name: 'operation',
+  type: 'options',
+  noDataExpression: true,
+  displayOptions: { show: { resource: ['staking'] } },
+  options: [
+    { name: 'Get Stake Info', value: 'getStakeInfo', description: 'Get staking information for address', action: 'Get stake info' },
+    { name: 'Get Validator Info', value: 'getValidatorInfo', description: 'Get validator details and status', action: 'Get validator info' },
+    { name: 'Get Rewards', value: 'getRewards', description: 'Get staking rewards for delegator', action: 'Get rewards' },
+    { name: 'Delegate Stake', value: 'delegateStake', description: 'Delegate OAS tokens to validator', action: 'Delegate stake' },
+    { name: 'Undelegate Stake', value: 'undelegateStake', description: 'Undelegate staked OAS tokens', action: 'Undelegate stake' },
+  ],
+  default: 'getStakeInfo',
+},
+{
+  displayName: 'Operation',
+  name: 'operation',
+  type: 'options',
+  noDataExpression: true,
+  displayOptions: { show: { resource: ['bridge'] } },
+  options: [
+    { name: 'Get Bridge Status', value: 'getBridgeStatus', description: 'Check bridge transaction status', action: 'Get bridge status' },
+    { name: 'Deposit To L2', value: 'depositToL2', description: 'Deposit assets from Hub to Verse L2', action: 'Deposit to L2' },
+    { name: 'Withdraw From L2', value: 'withdrawFromL2', description: 'Withdraw assets from Verse L2 to Hub', action: 'Withdraw from L2' },
+    { name: 'Get Bridge Events', value: 'getBridgeEvents', description: 'Get bridge-related events', action: 'Get bridge events' },
+    { name: 'Get Bridge Fee', value: 'getBridgeFee', description: 'Get current bridging fees', action: 'Get bridge fee' }
+  ],
+  default: 'getBridgeStatus',
+},
+{
+	displayName: 'Operation',
+	name: 'operation',
+	type: 'options',
+	noDataExpression: true,
+	displayOptions: { show: { resource: ['verseLayer'] } },
+	options: [
+		{ name: 'Get Chain ID', value: 'getChainId', description: 'Get Verse chain ID', action: 'Get chain ID' },
+		{ name: 'Get Game Assets', value: 'getGameAssets', description: 'Query game asset information on Verse', action: 'Get game assets' },
+		{ name: 'Transfer Game Asset', value: 'transferGameAsset', description: 'Transfer game assets on Verse', action: 'Transfer game asset' },
+		{ name: 'Get Game Events', value: 'getGameEvents', description: 'Get game-related events', action: 'Get game events' },
+		{ name: 'Get Verse Info', value: 'getVerseInfo', description: 'Get Verse L2 chain information', action: 'Get verse info' },
+	],
+	default: 'getChainId',
+},
 {
   displayName: 'Operation',
   name: 'operation',
@@ -280,7 +419,291 @@ export class OasysGaming implements INodeType {
   ],
   default: 'mintGameAsset',
 },
-      // Parameter definitions
+{
+  displayName: 'Address',
+  name: 'address',
+  type: 'string',
+  required: true,
+  displayOptions: {
+    show: {
+      resource: ['account'],
+      operation: ['getBalance', 'getTransactionCount', 'getCode']
+    }
+  },
+  default: '',
+  description: 'The Ethereum address to query',
+},
+{
+  displayName: 'Block Number',
+  name: 'blockNumber',
+  type: 'options',
+  options: [
+    { name: 'Latest', value: 'latest' },
+    { name: 'Earliest', value: 'earliest' },
+    { name: 'Pending', value: 'pending' },
+    { name: 'Custom', value: 'custom' }
+  ],
+  displayOptions: {
+    show: {
+      resource: ['account'],
+      operation: ['getBalance', 'getTransactionCount', 'getCode']
+    }
+  },
+  default: 'latest',
+  description: 'The block number to query at',
+},
+{
+  displayName: 'Custom Block Number',
+  name: 'customBlockNumber',
+  type: 'string',
+  displayOptions: {
+    show: {
+      resource: ['account'],
+      operation: ['getBalance', 'getTransactionCount', 'getCode'],
+      blockNumber: ['custom']
+    }
+  },
+  default: '',
+  description: 'Custom block number in hex format (e.g., 0x1b4)',
+},
+{
+	displayName: 'Transaction Object',
+	name: 'transaction',
+	type: 'json',
+	displayOptions: {
+		show: {
+			resource: ['transaction'],
+			operation: ['sendTransaction', 'estimateGas'],
+		},
+	},
+	default: '{\n  "to": "0x...",\n  "value": "0x0",\n  "gas": "0x5208",\n  "gasPrice": "0x9184e72a000",\n  "data": "0x"\n}',
+	description: 'The transaction object containing to, value, gas, gasPrice, and data fields',
+	placeholder: 'Enter transaction object as JSON',
+	required: true,
+},
+{
+	displayName: 'Signed Transaction Data',
+	name: 'signedTransactionData',
+	type: 'string',
+	displayOptions: {
+		show: {
+			resource: ['transaction'],
+			operation: ['sendRawTransaction'],
+		},
+	},
+	default: '',
+	description: 'The signed raw transaction data in hex format',
+	placeholder: '0x...',
+	required: true,
+},
+{
+	displayName: 'Transaction Hash',
+	name: 'transactionHash',
+	type: 'string',
+	displayOptions: {
+		show: {
+			resource: ['transaction'],
+			operation: ['getTransaction', 'getTransactionReceipt'],
+		},
+	},
+	default: '',
+	description: 'The transaction hash to look up',
+	placeholder: '0x...',
+	required: true,
+},
+{
+  displayName: 'Block Number',
+  name: 'blockNumber',
+  type: 'string',
+  required: true,
+  displayOptions: {
+    show: {
+      resource: ['block'],
+      operation: ['getBlockByNumber', 'getBlockTransactionCount']
+    }
+  },
+  default: 'latest',
+  placeholder: 'latest, earliest, pending, or hex number (e.g., 0x1b4)',
+  description: 'The block number in hex format, or "latest", "earliest", "pending"',
+},
+{
+  displayName: 'Block Hash',
+  name: 'blockHash',
+  type: 'string',
+  required: true,
+  displayOptions: {
+    show: {
+      resource: ['block'],
+      operation: ['getBlockByHash']
+    }
+  },
+  default: '',
+  placeholder: '0x...',
+  description: 'The hash of the block',
+},
+{
+  displayName: 'Include Transactions',
+  name: 'includeTransactions',
+  type: 'boolean',
+  displayOptions: {
+    show: {
+      resource: ['block'],
+      operation: ['getBlockByNumber', 'getBlockByHash']
+    }
+  },
+  default: false,
+  description: 'Whether to include full transaction objects or just transaction hashes',
+},
+{
+  displayName: 'Contract Call',
+  name: 'contractCall',
+  type: 'json',
+  required: true,
+  displayOptions: {
+    show: {
+      resource: ['staking'],
+      operation: ['getStakeInfo', 'getValidatorInfo', 'getRewards']
+    }
+  },
+  default: '{}',
+  description: 'The contract call data in JSON format'
+},
+{
+  displayName: 'Block Number',
+  name: 'blockNumber',
+  type: 'string',
+  displayOptions: {
+    show: {
+      resource: ['staking'],
+      operation: ['getStakeInfo', 'getValidatorInfo', 'getRewards']
+    }
+  },
+  default: 'latest',
+  description: 'Block number to query (hex string or "latest")'
+},
+{
+  displayName: 'Transaction',
+  name: 'transaction',
+  type: 'json',
+  required: true,
+  displayOptions: {
+    show: {
+      resource: ['staking'],
+      operation: ['delegateStake', 'undelegateStake']
+    }
+  },
+  default: '{}',
+  description: 'Transaction data in JSON format'
+},
+{
+  displayName: 'Contract Call Data',
+  name: 'contractCall',
+  type: 'json',
+  required: true,
+  displayOptions: { show: { resource: ['bridge'], operation: ['getBridgeStatus'] } },
+  default: '{"to":"","data":""}',
+  description: 'Contract call data for bridge status check'
+},
+{
+  displayName: 'Block Number',
+  name: 'blockNumber',
+  type: 'string',
+  required: false,
+  displayOptions: { show: { resource: ['bridge'], operation: ['getBridgeStatus'] } },
+  default: 'latest',
+  description: 'Block number for the call (latest, earliest, pending, or hex number)'
+},
+{
+  displayName: 'Transaction Data',
+  name: 'transaction',
+  type: 'json',
+  required: true,
+  displayOptions: { show: { resource: ['bridge'], operation: ['depositToL2', 'withdrawFromL2'] } },
+  default: '{"from":"","to":"","value":"","data":"","gas":"","gasPrice":""}',
+  description: 'Transaction data for deposit/withdrawal operation'
+},
+{
+  displayName: 'Filter',
+  name: 'filter',
+  type: 'json',
+  required: true,
+  displayOptions: { show: { resource: ['bridge'], operation: ['getBridgeEvents'] } },
+  default: '{"fromBlock":"","toBlock":"","address":"","topics":[]}',
+  description: 'Filter parameters for bridge events'
+},
+{
+  displayName: 'Bridge Fee Contract Call',
+  name: 'contractCall',
+  type: 'json',
+  required: true,
+  displayOptions: { show: { resource: ['bridge'], operation: ['getBridgeFee'] } },
+  default: '{"to":"","data":""}',
+  description: 'Contract call data for bridge fee inquiry'
+},
+{
+  displayName: 'Block Number',
+  name: 'blockNumber',
+  type: 'string',
+  required: false,
+  displayOptions: { show: { resource: ['bridge'], operation: ['getBridgeFee'] } },
+  default: 'latest',
+  description: 'Block number for the call (latest, earliest, pending, or hex number)'
+},
+{
+	displayName: 'Contract Call',
+	name: 'contractCall',
+	type: 'json',
+	required: true,
+	displayOptions: {
+		show: {
+			resource: ['verseLayer'],
+			operation: ['getGameAssets', 'getVerseInfo'],
+		},
+	},
+	default: '{}',
+	description: 'Contract call parameters including to, data, and other fields',
+},
+{
+	displayName: 'Block Number',
+	name: 'blockNumber',
+	type: 'string',
+	displayOptions: {
+		show: {
+			resource: ['verseLayer'],
+			operation: ['getGameAssets', 'getVerseInfo'],
+		},
+	},
+	default: 'latest',
+	description: 'Block number to query (hex string or "latest")',
+},
+{
+	displayName: 'Transaction',
+	name: 'transaction',
+	type: 'json',
+	required: true,
+	displayOptions: {
+		show: {
+			resource: ['verseLayer'],
+			operation: ['transferGameAsset'],
+		},
+	},
+	default: '{}',
+	description: 'Transaction object with to, value, data, and other fields',
+},
+{
+	displayName: 'Filter',
+	name: 'filter',
+	type: 'json',
+	required: true,
+	displayOptions: {
+		show: {
+			resource: ['verseLayer'],
+			operation: ['getGameEvents'],
+		},
+	},
+	default: '{}',
+	description: 'Filter parameters for log queries including address, topics, fromBlock, toBlock',
+},
 {
   displayName: 'Network',
   name: 'network',
@@ -1004,6 +1427,18 @@ export class OasysGaming implements INodeType {
     const resource = this.getNodeParameter('resource', 0) as string;
 
     switch (resource) {
+      case 'account':
+        return [await executeAccountOperations.call(this, items)];
+      case 'transaction':
+        return [await executeTransactionOperations.call(this, items)];
+      case 'block':
+        return [await executeBlockOperations.call(this, items)];
+      case 'staking':
+        return [await executeStakingOperations.call(this, items)];
+      case 'bridge':
+        return [await executeBridgeOperations.call(this, items)];
+      case 'verseLayer':
+        return [await executeVerseLayerOperations.call(this, items)];
       case 'stakingOperations':
         return [await executeStakingOperationsOperations.call(this, items)];
       case 'verseLayerManagement':
@@ -1022,209 +1457,412 @@ export class OasysGaming implements INodeType {
 // Resource Handler Functions
 // ============================================================
 
-async function executeStakingOperationsOperations(
+async function executeAccountOperations(
   this: IExecuteFunctions,
   items: INodeExecutionData[],
 ): Promise<INodeExecutionData[]> {
   const returnData: INodeExecutionData[] = [];
   const operation = this.getNodeParameter('operation', 0) as string;
+  const credentials = await this.getCredentials('oasysgamingApi') as any;
 
   for (let i = 0; i < items.length; i++) {
     try {
       let result: any;
-      const network = this.getNodeParameter('network', i) as string;
-      const baseUrl = network === 'mainnet' 
-        ? 'https://rpc.mainnet.oasys.games' 
-        : 'https://rpc.testnet.oasys.games';
 
       switch (operation) {
-        case 'delegateStake': {
-          const validatorAddress = this.getNodeParameter('validatorAddress', i) as string;
-          const amount = this.getNodeParameter('amount', i) as string;
-          const gasPrice = this.getNodeParameter('gasPrice', i) as string;
-          const privateKey = this.getNodeParameter('privateKey', i) as string;
-
-          const transactionData: any = {
-            to: validatorAddress,
-            value: amount,
-            data: '0x',
+        case 'getBalance': {
+          const address = this.getNodeParameter('address', i) as string;
+          const blockNumber = this.getNodeParameter('blockNumber', i) as string;
+          const customBlockNumber = this.getNodeParameter('customBlockNumber', i, '') as string;
+          
+          const block = blockNumber === 'custom' ? customBlockNumber : blockNumber;
+          
+          const requestBody = {
+            jsonrpc: '2.0',
+            method: 'eth_getBalance',
+            params: [address, block],
+            id: 1
           };
-
-          if (gasPrice) {
-            transactionData.gasPrice = gasPrice;
-          }
 
           const options: any = {
             method: 'POST',
-            url: baseUrl,
+            url: credentials.rpcUrl || 'https://rpc.mainnet.oasys.games',
             headers: {
               'Content-Type': 'application/json',
+              'Authorization': credentials.apiKey ? `Bearer ${credentials.apiKey}` : undefined
             },
-            json: true,
-            body: {
-              jsonrpc: '2.0',
-              method: 'eth_sendTransaction',
-              params: [transactionData],
-              id: 1,
-            },
+            body: requestBody,
+            json: true
           };
 
           result = await this.helpers.httpRequest(options) as any;
           break;
         }
 
-        case 'getStakedAmount': {
-          const delegatorAddress = this.getNodeParameter('delegatorAddress', i) as string;
-          const validatorAddress = this.getNodeParameter('validatorAddress', i) as string;
+        case 'getTransactionCount': {
+          const address = this.getNodeParameter('address', i) as string;
+          const blockNumber = this.getNodeParameter('blockNumber', i) as string;
+          const customBlockNumber = this.getNodeParameter('customBlockNumber', i, '') as string;
+          
+          const block = blockNumber === 'custom' ? customBlockNumber : blockNumber;
+          
+          const requestBody = {
+            jsonrpc: '2.0',
+            method: 'eth_getTransactionCount',
+            params: [address, block],
+            id: 1
+          };
 
           const options: any = {
             method: 'POST',
-            url: baseUrl,
+            url: credentials.rpcUrl || 'https://rpc.mainnet.oasys.games',
             headers: {
               'Content-Type': 'application/json',
+              'Authorization': credentials.apiKey ? `Bearer ${credentials.apiKey}` : undefined
             },
-            json: true,
-            body: {
-              jsonrpc: '2.0',
-              method: 'eth_call',
-              params: [{
-                to: validatorAddress,
-                data: encodeStakedAmountCall(delegatorAddress),
-              }, 'latest'],
-              id: 1,
-            },
+            body: requestBody,
+            json: true
           };
 
           result = await this.helpers.httpRequest(options) as any;
           break;
         }
 
-        case 'getValidatorInfo': {
-          const validatorAddress = this.getNodeParameter('validatorAddress', i) as string;
+        case 'getCode': {
+          const address = this.getNodeParameter('address', i) as string;
+          const blockNumber = this.getNodeParameter('blockNumber', i) as string;
+          const customBlockNumber = this.getNodeParameter('customBlockNumber', i, '') as string;
+          
+          const block = blockNumber === 'custom' ? customBlockNumber : blockNumber;
+          
+          const requestBody = {
+            jsonrpc: '2.0',
+            method: 'eth_getCode',
+            params: [address, block],
+            id: 1
+          };
 
           const options: any = {
             method: 'POST',
-            url: baseUrl,
+            url: credentials.rpcUrl || 'https://rpc.mainnet.oasys.games',
             headers: {
               'Content-Type': 'application/json',
+              'Authorization': credentials.apiKey ? `Bearer ${credentials.apiKey}` : undefined
             },
-            json: true,
-            body: {
-              jsonrpc: '2.0',
-              method: 'eth_call',
-              params: [{
-                to: validatorAddress,
-                data: '0x', // Contract method to get validator info
-              }, 'latest'],
-              id: 1,
-            },
+            body: requestBody,
+            json: true
           };
 
           result = await this.helpers.httpRequest(options) as any;
           break;
         }
 
-        case 'undelegateStake': {
-          const validatorAddress = this.getNodeParameter('validatorAddress', i) as string;
-          const amount = this.getNodeParameter('amount', i) as string;
-          const privateKey = this.getNodeParameter('privateKey', i) as string;
-
-          const transactionData: any = {
-            to: validatorAddress,
-            value: '0x0',
-            data: encodeUndelegateCall(amount),
+        case 'listAccounts': {
+          const requestBody = {
+            jsonrpc: '2.0',
+            method: 'eth_accounts',
+            params: [],
+            id: 1
           };
 
           const options: any = {
             method: 'POST',
-            url: baseUrl,
+            url: credentials.rpcUrl || 'https://rpc.mainnet.oasys.games',
             headers: {
               'Content-Type': 'application/json',
+              'Authorization': credentials.apiKey ? `Bearer ${credentials.apiKey}` : undefined
             },
-            json: true,
-            body: {
-              jsonrpc: '2.0',
-              method: 'eth_sendTransaction',
-              params: [transactionData],
-              id: 1,
-            },
+            body: requestBody,
+            json: true
           };
 
           result = await this.helpers.httpRequest(options) as any;
           break;
         }
 
-        case 'getPendingRewards': {
-          const delegatorAddress = this.getNodeParameter('delegatorAddress', i) as string;
+        default:
+          throw new NodeOperationError(this.getNode(), `Unknown operation: ${operation}`);
+      }
+
+      returnData.push({
+        json: result,
+        pairedItem: { item: i }
+      });
+
+    } catch (error: any) {
+      if (this.continueOnFail()) {
+        returnData.push({
+          json: { error: error.message },
+          pairedItem: { item: i }
+        });
+      } else {
+        throw error;
+      }
+    }
+  }
+
+  return returnData;
+}
+
+async function executeTransactionOperations(
+	this: IExecuteFunctions,
+	items: INodeExecutionData[],
+): Promise<INodeExecutionData[]> {
+	const returnData: INodeExecutionData[] = [];
+	const operation = this.getNodeParameter('operation', 0) as string;
+	const credentials = await this.getCredentials('oasysgamingApi') as any;
+
+	for (let i = 0; i < items.length; i++) {
+		try {
+			let result: any;
+
+			switch (operation) {
+				case 'sendTransaction': {
+					const transaction = this.getNodeParameter('transaction', i) as object;
+					
+					const options: any = {
+						method: 'POST',
+						url: credentials.rpcUrl || 'https://rpc.mainnet.oasys.games',
+						headers: {
+							'Content-Type': 'application/json',
+							'Authorization': credentials.apiKey ? `Bearer ${credentials.apiKey}` : undefined,
+						},
+						json: true,
+						body: {
+							jsonrpc: '2.0',
+							method: 'eth_sendTransaction',
+							params: [transaction],
+							id: 1,
+						},
+					};
+
+					result = await this.helpers.httpRequest(options) as any;
+					break;
+				}
+
+				case 'sendRawTransaction': {
+					const signedTransactionData = this.getNodeParameter('signedTransactionData', i) as string;
+					
+					const options: any = {
+						method: 'POST',
+						url: credentials.rpcUrl || 'https://rpc.mainnet.oasys.games',
+						headers: {
+							'Content-Type': 'application/json',
+							'Authorization': credentials.apiKey ? `Bearer ${credentials.apiKey}` : undefined,
+						},
+						json: true,
+						body: {
+							jsonrpc: '2.0',
+							method: 'eth_sendRawTransaction',
+							params: [signedTransactionData],
+							id: 1,
+						},
+					};
+
+					result = await this.helpers.httpRequest(options) as any;
+					break;
+				}
+
+				case 'getTransaction': {
+					const transactionHash = this.getNodeParameter('transactionHash', i) as string;
+					
+					const options: any = {
+						method: 'POST',
+						url: credentials.rpcUrl || 'https://rpc.mainnet.oasys.games',
+						headers: {
+							'Content-Type': 'application/json',
+							'Authorization': credentials.apiKey ? `Bearer ${credentials.apiKey}` : undefined,
+						},
+						json: true,
+						body: {
+							jsonrpc: '2.0',
+							method: 'eth_getTransaction',
+							params: [transactionHash],
+							id: 1,
+						},
+					};
+
+					result = await this.helpers.httpRequest(options) as any;
+					break;
+				}
+
+				case 'getTransactionReceipt': {
+					const transactionHash = this.getNodeParameter('transactionHash', i) as string;
+					
+					const options: any = {
+						method: 'POST',
+						url: credentials.rpcUrl || 'https://rpc.mainnet.oasys.games',
+						headers: {
+							'Content-Type': 'application/json',
+							'Authorization': credentials.apiKey ? `Bearer ${credentials.apiKey}` : undefined,
+						},
+						json: true,
+						body: {
+							jsonrpc: '2.0',
+							method: 'eth_getTransactionReceipt',
+							params: [transactionHash],
+							id: 1,
+						},
+					};
+
+					result = await this.helpers.httpRequest(options) as any;
+					break;
+				}
+
+				case 'estimateGas': {
+					const transaction = this.getNodeParameter('transaction', i) as object;
+					
+					const options: any = {
+						method: 'POST',
+						url: credentials.rpcUrl || 'https://rpc.mainnet.oasys.games',
+						headers: {
+							'Content-Type': 'application/json',
+							'Authorization': credentials.apiKey ? `Bearer ${credentials.apiKey}` : undefined,
+						},
+						json: true,
+						body: {
+							jsonrpc: '2.0',
+							method: 'eth_estimateGas',
+							params: [transaction],
+							id: 1,
+						},
+					};
+
+					result = await this.helpers.httpRequest(options) as any;
+					break;
+				}
+
+				default:
+					throw new NodeOperationError(this.getNode(), `Unknown operation: ${operation}`);
+			}
+
+			returnData.push({
+				json: result,
+				pairedItem: { item: i },
+			});
+
+		} catch (error: any) {
+			if (this.continueOnFail()) {
+				returnData.push({
+					json: { error: error.message },
+					pairedItem: { item: i },
+				});
+			} else {
+				throw error;
+			}
+		}
+	}
+
+	return returnData;
+}
+
+async function executeBlockOperations(
+  this: IExecuteFunctions,
+  items: INodeExecutionData[],
+): Promise<INodeExecutionData[]> {
+  const returnData: INodeExecutionData[] = [];
+  const operation = this.getNodeParameter('operation', 0) as string;
+  const credentials = await this.getCredentials('oasysgamingApi') as any;
+
+  for (let i = 0; i < items.length; i++) {
+    try {
+      let result: any;
+
+      switch (operation) {
+        case 'getBlockByNumber': {
+          const blockNumber = this.getNodeParameter('blockNumber', i) as string;
+          const includeTransactions = this.getNodeParameter('includeTransactions', i) as boolean;
+
+          const rpcPayload = {
+            jsonrpc: '2.0',
+            method: 'eth_getBlockByNumber',
+            params: [blockNumber, includeTransactions],
+            id: 1
+          };
 
           const options: any = {
             method: 'POST',
-            url: baseUrl,
+            url: credentials.rpcUrl || 'https://rpc.mainnet.oasys.games',
             headers: {
               'Content-Type': 'application/json',
+              'Authorization': credentials.apiKey ? `Bearer ${credentials.apiKey}` : undefined
             },
-            json: true,
-            body: {
-              jsonrpc: '2.0',
-              method: 'eth_call',
-              params: [{
-                to: '0x0000000000000000000000000000000000001001', // Staking contract address
-                data: encodePendingRewardsCall(delegatorAddress),
-              }, 'latest'],
-              id: 1,
-            },
+            body: rpcPayload,
+            json: true
           };
 
           result = await this.helpers.httpRequest(options) as any;
           break;
         }
 
-        case 'claimRewards': {
-          const delegatorAddress = this.getNodeParameter('delegatorAddress', i) as string;
-          const privateKey = this.getNodeParameter('privateKey', i) as string;
+        case 'getBlockByHash': {
+          const blockHash = this.getNodeParameter('blockHash', i) as string;
+          const includeTransactions = this.getNodeParameter('includeTransactions', i) as boolean;
 
-          const transactionData: any = {
-            to: '0x0000000000000000000000000000000000001001', // Staking contract address
-            value: '0x0',
-            data: encodeClaimRewardsCall(delegatorAddress),
+          const rpcPayload = {
+            jsonrpc: '2.0',
+            method: 'eth_getBlockByHash',
+            params: [blockHash, includeTransactions],
+            id: 1
           };
 
           const options: any = {
             method: 'POST',
-            url: baseUrl,
+            url: credentials.rpcUrl || 'https://rpc.mainnet.oasys.games',
             headers: {
               'Content-Type': 'application/json',
+              'Authorization': credentials.apiKey ? `Bearer ${credentials.apiKey}` : undefined
             },
-            json: true,
-            body: {
-              jsonrpc: '2.0',
-              method: 'eth_sendTransaction',
-              params: [transactionData],
-              id: 1,
-            },
+            body: rpcPayload,
+            json: true
           };
 
           result = await this.helpers.httpRequest(options) as any;
           break;
         }
 
-        case 'getAllValidators': {
+        case 'getCurrentBlockNumber': {
+          const rpcPayload = {
+            jsonrpc: '2.0',
+            method: 'eth_blockNumber',
+            params: [],
+            id: 1
+          };
+
           const options: any = {
             method: 'POST',
-            url: baseUrl,
+            url: credentials.rpcUrl || 'https://rpc.mainnet.oasys.games',
             headers: {
               'Content-Type': 'application/json',
+              'Authorization': credentials.apiKey ? `Bearer ${credentials.apiKey}` : undefined
             },
-            json: true,
-            body: {
-              jsonrpc: '2.0',
-              method: 'eth_call',
-              params: [{
-                to: '0x0000000000000000000000000000000000001001', // Staking contract address
-                data: '0x', // Contract method to get all validators
-              }, 'latest'],
-              id: 1,
+            body: rpcPayload,
+            json: true
+          };
+
+          result = await this.helpers.httpRequest(options) as any;
+          break;
+        }
+
+        case 'getBlockTransactionCount': {
+          const blockNumber = this.getNodeParameter('blockNumber', i) as string;
+
+          const rpcPayload = {
+            jsonrpc: '2.0',
+            method: 'eth_getBlockTransactionCountByNumber',
+            params: [blockNumber],
+            id: 1
+          };
+
+          const options: any = {
+            method: 'POST',
+            url: credentials.rpcUrl || 'https://rpc.mainnet.oasys.games',
+            headers: {
+              'Content-Type': 'application/json',
+              'Authorization': credentials.apiKey ? `Bearer ${credentials.apiKey}` : undefined
             },
+            body: rpcPayload,
+            json: true
           };
 
           result = await this.helpers.httpRequest(options) as any;
@@ -1240,7 +1878,7 @@ async function executeStakingOperationsOperations(
       if (this.continueOnFail()) {
         returnData.push({ json: { error: error.message }, pairedItem: { item: i } });
       } else {
-        throw new NodeApiError(this.getNode(), error);
+        throw error;
       }
     }
   }
@@ -1248,31 +1886,7 @@ async function executeStakingOperationsOperations(
   return returnData;
 }
 
-function encodeStakedAmountCall(delegatorAddress: string): string {
-  // This would encode the contract call to get staked amount
-  // For simplicity, returning placeholder
-  return '0x' + Buffer.from(`getStakedAmount(${delegatorAddress})`).toString('hex');
-}
-
-function encodeUndelegateCall(amount: string): string {
-  // This would encode the contract call to undelegate
-  // For simplicity, returning placeholder
-  return '0x' + Buffer.from(`undelegate(${amount})`).toString('hex');
-}
-
-function encodePendingRewardsCall(delegatorAddress: string): string {
-  // This would encode the contract call to get pending rewards
-  // For simplicity, returning placeholder
-  return '0x' + Buffer.from(`getPendingRewards(${delegatorAddress})`).toString('hex');
-}
-
-function encodeClaimRewardsCall(delegatorAddress: string): string {
-  // This would encode the contract call to claim rewards
-  // For simplicity, returning placeholder
-  return '0x' + Buffer.from(`claimRewards(${delegatorAddress})`).toString('hex');
-}
-
-async function executeVerseLayerManagementOperations(
+async function executeStakingOperations(
   this: IExecuteFunctions,
   items: INodeExecutionData[],
 ): Promise<INodeExecutionData[]> {
@@ -1285,19 +1899,15 @@ async function executeVerseLayerManagementOperations(
       let result: any;
 
       switch (operation) {
-        case 'getVerseInfo': {
-          const verseId = this.getNodeParameter('verseId', i) as string;
-          const rpcPayload = {
+        case 'getStakeInfo': {
+          const contractCall = this.getNodeParameter('contractCall', i) as any;
+          const blockNumber = this.getNodeParameter('blockNumber', i) as string;
+          
+          const body = {
             jsonrpc: '2.0',
             method: 'eth_call',
-            params: [
-              {
-                to: verseId,
-                data: '0x' // ABI encoded method call for getting verse info
-              },
-              'latest'
-            ],
-            id: 1
+            params: [contractCall, blockNumber],
+            id: 1,
           };
 
           const options: any = {
@@ -1305,59 +1915,26 @@ async function executeVerseLayerManagementOperations(
             url: credentials.rpcUrl || 'https://rpc.mainnet.oasys.games',
             headers: {
               'Content-Type': 'application/json',
+              'Authorization': credentials.apiKey ? `Bearer ${credentials.apiKey}` : undefined,
             },
-            body: JSON.stringify(rpcPayload),
-            json: true,
+            body: JSON.stringify(body),
+            json: false,
           };
 
-          result = await this.helpers.httpRequest(options) as any;
+          const response = await this.helpers.httpRequest(options) as any;
+          result = JSON.parse(response);
           break;
         }
 
-        case 'deployVerse': {
-          const verseConfig = this.getNodeParameter('verseConfig', i) as any;
-          const initialValidators = this.getNodeParameter('initialValidators', i) as any;
+        case 'getValidatorInfo': {
+          const contractCall = this.getNodeParameter('contractCall', i) as any;
+          const blockNumber = this.getNodeParameter('blockNumber', i) as string;
           
-          const rpcPayload = {
-            jsonrpc: '2.0',
-            method: 'eth_sendTransaction',
-            params: [{
-              from: credentials.walletAddress,
-              to: credentials.verseFactoryContract,
-              data: '0x' + this.encodeVerseDeployment(verseConfig, initialValidators),
-              gas: '0x' + (500000).toString(16),
-            }],
-            id: 1
-          };
-
-          const options: any = {
-            method: 'POST',
-            url: credentials.rpcUrl || 'https://rpc.mainnet.oasys.games',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(rpcPayload),
-            json: true,
-          };
-
-          result = await this.helpers.httpRequest(options) as any;
-          break;
-        }
-
-        case 'getVerseValidators': {
-          const verseId = this.getNodeParameter('verseId', i) as string;
-          
-          const rpcPayload = {
+          const body = {
             jsonrpc: '2.0',
             method: 'eth_call',
-            params: [
-              {
-                to: verseId,
-                data: '0x' + this.encodeValidatorsQuery()
-              },
-              'latest'
-            ],
-            id: 1
+            params: [contractCall, blockNumber],
+            id: 1,
           };
 
           const options: any = {
@@ -1365,685 +1942,4 @@ async function executeVerseLayerManagementOperations(
             url: credentials.rpcUrl || 'https://rpc.mainnet.oasys.games',
             headers: {
               'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(rpcPayload),
-            json: true,
-          };
-
-          result = await this.helpers.httpRequest(options) as any;
-          break;
-        }
-
-        case 'updateVerseConfig': {
-          const verseId = this.getNodeParameter('verseId', i) as string;
-          const newConfig = this.getNodeParameter('newConfig', i) as any;
-          
-          const rpcPayload = {
-            jsonrpc: '2.0',
-            method: 'eth_sendTransaction',
-            params: [{
-              from: credentials.walletAddress,
-              to: verseId,
-              data: '0x' + this.encodeConfigUpdate(newConfig),
-              gas: '0x' + (200000).toString(16),
-            }],
-            id: 1
-          };
-
-          const options: any = {
-            method: 'POST',
-            url: credentials.rpcUrl || 'https://rpc.mainnet.oasys.games',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(rpcPayload),
-            json: true,
-          };
-
-          result = await this.helpers.httpRequest(options) as any;
-          break;
-        }
-
-        case 'getVerseStats': {
-          const verseId = this.getNodeParameter('verseId', i) as string;
-          const timeRange = this.getNodeParameter('timeRange', i) as any;
-          
-          const rpcPayload = {
-            jsonrpc: '2.0',
-            method: 'eth_call',
-            params: [
-              {
-                to: verseId,
-                data: '0x' + this.encodeStatsQuery(timeRange)
-              },
-              'latest'
-            ],
-            id: 1
-          };
-
-          const options: any = {
-            method: 'POST',
-            url: credentials.rpcUrl || 'https://rpc.mainnet.oasys.games',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(rpcPayload),
-            json: true,
-          };
-
-          result = await this.helpers.httpRequest(options) as any;
-          break;
-        }
-
-        case 'listAllVerses': {
-          const rpcPayload = {
-            jsonrpc: '2.0',
-            method: 'eth_call',
-            params: [
-              {
-                to: credentials.verseRegistryContract,
-                data: '0x' + this.encodeListVersesQuery()
-              },
-              'latest'
-            ],
-            id: 1
-          };
-
-          const options: any = {
-            method: 'POST',
-            url: credentials.rpcUrl || 'https://rpc.mainnet.oasys.games',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(rpcPayload),
-            json: true,
-          };
-
-          result = await this.helpers.httpRequest(options) as any;
-          break;
-        }
-
-        default:
-          throw new NodeOperationError(this.getNode(), `Unknown operation: ${operation}`);
-      }
-
-      returnData.push({ json: result, pairedItem: { item: i } });
-
-    } catch (error: any) {
-      if (this.continueOnFail()) {
-        returnData.push({ 
-          json: { error: error.message }, 
-          pairedItem: { item: i } 
-        });
-      } else {
-        throw new NodeApiError(this.getNode(), error);
-      }
-    }
-  }
-
-  return returnData;
-}
-
-function encodeVerseDeployment(this: any, verseConfig: any, initialValidators: any[]): string {
-  // Simplified ABI encoding for verse deployment
-  // In real implementation, would use proper ABI encoding library
-  return 'deadbeef' + JSON.stringify({ verseConfig, initialValidators }).length.toString(16);
-}
-
-function encodeValidatorsQuery(this: any): string {
-  // Method signature for getValidators()
-  return 'b7ab4db5';
-}
-
-function encodeConfigUpdate(this: any, newConfig: any): string {
-  // Simplified ABI encoding for config update
-  return 'abc12345' + JSON.stringify(newConfig).length.toString(16);
-}
-
-function encodeStatsQuery(this: any, timeRange: any): string {
-  // Method signature for getStats with time range
-  return 'fed12345' + JSON.stringify(timeRange).length.toString(16);
-}
-
-function encodeListVersesQuery(this: any): string {
-  // Method signature for listAllVerses()
-  return 'c4d66de8';
-}
-
-async function executeCrossLayerBridgingOperations(
-  this: IExecuteFunctions,
-  items: INodeExecutionData[],
-): Promise<INodeExecutionData[]> {
-  const returnData: INodeExecutionData[] = [];
-  const operation = this.getNodeParameter('operation', 0) as string;
-  const credentials = await this.getCredentials('oasysgamingApi') as any;
-
-  for (let i = 0; i < items.length; i++) {
-    try {
-      let result: any;
-
-      switch (operation) {
-        case 'initiateDeposit': {
-          const verseId = this.getNodeParameter('verseId', i) as string;
-          const amount = this.getNodeParameter('amount', i) as string;
-          const recipient = this.getNodeParameter('recipient', i) as string;
-          const fromAddress = this.getNodeParameter('fromAddress', i) as string;
-          const privateKey = this.getNodeParameter('privateKey', i) as string;
-
-          const txData = {
-            from: fromAddress,
-            to: '0x0000000000000000000000000000000000000000', // Bridge contract address
-            value: amount,
-            data: `0x${Buffer.from(JSON.stringify({
-              verseId,
-              recipient,
-            })).toString('hex')}`,
-          };
-
-          const options: any = {
-            method: 'POST',
-            url: credentials.baseUrl,
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            json: true,
-            body: {
-              jsonrpc: '2.0',
-              method: 'eth_sendTransaction',
-              params: [txData],
-              id: 1,
-            },
-          };
-
-          result = await this.helpers.httpRequest(options) as any;
-          break;
-        }
-
-        case 'initiateWithdrawal': {
-          const verseId = this.getNodeParameter('verseId', i) as string;
-          const amount = this.getNodeParameter('amount', i) as string;
-          const recipient = this.getNodeParameter('recipient', i) as string;
-          const fromAddress = this.getNodeParameter('fromAddress', i) as string;
-          const privateKey = this.getNodeParameter('privateKey', i) as string;
-
-          const txData = {
-            from: fromAddress,
-            to: '0x0000000000000000000000000000000000000000', // L2 Bridge contract address
-            value: '0',
-            data: `0x${Buffer.from(JSON.stringify({
-              verseId,
-              amount,
-              recipient,
-            })).toString('hex')}`,
-          };
-
-          const options: any = {
-            method: 'POST',
-            url: credentials.baseUrl.replace('mainnet', verseId),
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            json: true,
-            body: {
-              jsonrpc: '2.0',
-              method: 'eth_sendTransaction',
-              params: [txData],
-              id: 1,
-            },
-          };
-
-          result = await this.helpers.httpRequest(options) as any;
-          break;
-        }
-
-        case 'getBridgeStatus': {
-          const transactionHash = this.getNodeParameter('transactionHash', i) as string;
-          const direction = this.getNodeParameter('direction', i) as string;
-
-          const options: any = {
-            method: 'POST',
-            url: credentials.baseUrl,
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            json: true,
-            body: {
-              jsonrpc: '2.0',
-              method: 'eth_call',
-              params: [
-                {
-                  to: '0x0000000000000000000000000000000000000000', // Bridge status contract
-                  data: `0x${Buffer.from(JSON.stringify({
-                    transactionHash,
-                    direction,
-                  })).toString('hex')}`,
-                },
-                'latest',
-              ],
-              id: 1,
-            },
-          };
-
-          result = await this.helpers.httpRequest(options) as any;
-          break;
-        }
-
-        case 'finalizeWithdrawal': {
-          const withdrawalId = this.getNodeParameter('withdrawalId', i) as string;
-          const merkleProof = this.getNodeParameter('merkleProof', i) as string;
-          const fromAddress = this.getNodeParameter('fromAddress', i) as string;
-          const privateKey = this.getNodeParameter('privateKey', i) as string;
-
-          const txData = {
-            from: fromAddress,
-            to: '0x0000000000000000000000000000000000000000', // Bridge finalize contract
-            value: '0',
-            data: `0x${Buffer.from(JSON.stringify({
-              withdrawalId,
-              merkleProof,
-            })).toString('hex')}`,
-          };
-
-          const options: any = {
-            method: 'POST',
-            url: credentials.baseUrl,
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            json: true,
-            body: {
-              jsonrpc: '2.0',
-              method: 'eth_sendTransaction',
-              params: [txData],
-              id: 1,
-            },
-          };
-
-          result = await this.helpers.httpRequest(options) as any;
-          break;
-        }
-
-        case 'getBridgeBalance': {
-          const userAddress = this.getNodeParameter('userAddress', i) as string;
-          const verseId = this.getNodeParameter('verseId', i) as string;
-
-          const options: any = {
-            method: 'POST',
-            url: credentials.baseUrl,
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            json: true,
-            body: {
-              jsonrpc: '2.0',
-              method: 'eth_call',
-              params: [
-                {
-                  to: '0x0000000000000000000000000000000000000000', // Bridge balance contract
-                  data: `0x${Buffer.from(JSON.stringify({
-                    userAddress,
-                    verseId,
-                  })).toString('hex')}`,
-                },
-                'latest',
-              ],
-              id: 1,
-            },
-          };
-
-          result = await this.helpers.httpRequest(options) as any;
-          break;
-        }
-
-        case 'getPendingWithdrawals': {
-          const userAddress = this.getNodeParameter('userAddress', i) as string;
-          const verseId = this.getNodeParameter('verseId', i) as string;
-
-          const options: any = {
-            method: 'POST',
-            url: credentials.baseUrl,
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            json: true,
-            body: {
-              jsonrpc: '2.0',
-              method: 'eth_call',
-              params: [
-                {
-                  to: '0x0000000000000000000000000000000000000000', // Withdrawal tracking contract
-                  data: `0x${Buffer.from(JSON.stringify({
-                    userAddress,
-                    verseId,
-                  })).toString('hex')}`,
-                },
-                'latest',
-              ],
-              id: 1,
-            },
-          };
-
-          result = await this.helpers.httpRequest(options) as any;
-          break;
-        }
-
-        case 'claimBridgedTokens': {
-          const claimId = this.getNodeParameter('claimId', i) as string;
-          const signature = this.getNodeParameter('signature', i) as string;
-          const fromAddress = this.getNodeParameter('fromAddress', i) as string;
-          const privateKey = this.getNodeParameter('privateKey', i) as string;
-
-          const txData = {
-            from: fromAddress,
-            to: '0x0000000000000000000000000000000000000000', // Token claim contract
-            value: '0',
-            data: `0x${Buffer.from(JSON.stringify({
-              claimId,
-              signature,
-            })).toString('hex')}`,
-          };
-
-          const options: any = {
-            method: 'POST',
-            url: credentials.baseUrl,
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            json: true,
-            body: {
-              jsonrpc: '2.0',
-              method: 'eth_sendTransaction',
-              params: [txData],
-              id: 1,
-            },
-          };
-
-          result = await this.helpers.httpRequest(options) as any;
-          break;
-        }
-
-        default:
-          throw new NodeOperationError(this.getNode(), `Unknown operation: ${operation}`);
-      }
-
-      returnData.push({
-        json: result,
-        pairedItem: { item: i },
-      });
-    } catch (error: any) {
-      if (this.continueOnFail()) {
-        returnData.push({
-          json: { error: error.message },
-          pairedItem: { item: i },
-        });
-      } else {
-        throw new NodeApiError(this.getNode(), error);
-      }
-    }
-  }
-
-  return returnData;
-}
-
-function generateTransactionId(): string {
-  return Math.floor(Math.random() * 1000000).toString();
-}
-
-function encodeContractCall(method: string, params: any[]): string {
-  return '0x' + Buffer.from(JSON.stringify({ method, params })).toString('hex');
-}
-
-async function executeGameAssetManagementOperations(
-  this: IExecuteFunctions,
-  items: INodeExecutionData[],
-): Promise<INodeExecutionData[]> {
-  const returnData: INodeExecutionData[] = [];
-  const operation = this.getNodeParameter('operation', 0) as string;
-  const credentials = await this.getCredentials('oasysgamingApi') as any;
-
-  for (let i = 0; i < items.length; i++) {
-    try {
-      let result: any;
-
-      switch (operation) {
-        case 'mintGameAsset': {
-          const contractAddress = this.getNodeParameter('contractAddress', i) as string;
-          const recipient = this.getNodeParameter('recipient', i) as string;
-          const tokenData = this.getNodeParameter('tokenData', i) as any;
-          const privateKey = this.getNodeParameter('privateKey', i) as string;
-
-          const txData = encodeContractCall('mint', [recipient, tokenData]);
-          
-          const options: any = {
-            method: 'POST',
-            url: credentials.baseUrl,
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            json: true,
-            body: {
-              jsonrpc: '2.0',
-              method: 'eth_sendTransaction',
-              params: [{
-                to: contractAddress,
-                data: txData,
-                gas: '0x76c0',
-                gasPrice: '0x9184e72a000',
-              }],
-              id: generateTransactionId(),
-            },
-          };
-
-          result = await this.helpers.httpRequest(options) as any;
-          break;
-        }
-
-        case 'getAssetMetadata': {
-          const contractAddress = this.getNodeParameter('contractAddress', i) as string;
-          const tokenId = this.getNodeParameter('tokenId', i) as string;
-
-          const callData = encodeContractCall('tokenURI', [tokenId]);
-
-          const options: any = {
-            method: 'POST',
-            url: credentials.baseUrl,
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            json: true,
-            body: {
-              jsonrpc: '2.0',
-              method: 'eth_call',
-              params: [{
-                to: contractAddress,
-                data: callData,
-              }, 'latest'],
-              id: generateTransactionId(),
-            },
-          };
-
-          result = await this.helpers.httpRequest(options) as any;
-          
-          if (result.result) {
-            try {
-              const metadataUri = Buffer.from(result.result.replace('0x', ''), 'hex').toString();
-              if (metadataUri.startsWith('http')) {
-                const metadataOptions: any = {
-                  method: 'GET',
-                  url: metadataUri,
-                  json: true,
-                };
-                const metadata = await this.helpers.httpRequest(metadataOptions) as any;
-                result.metadata = metadata;
-              }
-            } catch (error: any) {
-              result.metadata = { error: 'Failed to fetch metadata' };
-            }
-          }
-          break;
-        }
-
-        case 'transferAsset': {
-          const contractAddress = this.getNodeParameter('contractAddress', i) as string;
-          const tokenId = this.getNodeParameter('tokenId', i) as string;
-          const recipient = this.getNodeParameter('recipient', i) as string;
-          const privateKey = this.getNodeParameter('privateKey', i) as string;
-
-          const txData = encodeContractCall('transferFrom', [privateKey, recipient, tokenId]);
-
-          const options: any = {
-            method: 'POST',
-            url: credentials.baseUrl,
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            json: true,
-            body: {
-              jsonrpc: '2.0',
-              method: 'eth_sendTransaction',
-              params: [{
-                to: contractAddress,
-                data: txData,
-                gas: '0x5208',
-                gasPrice: '0x9184e72a000',
-              }],
-              id: generateTransactionId(),
-            },
-          };
-
-          result = await this.helpers.httpRequest(options) as any;
-          break;
-        }
-
-        case 'getUserAssets': {
-          const userAddress = this.getNodeParameter('userAddress', i) as string;
-          const verseId = this.getNodeParameter('verseId', i) as string;
-
-          let rpcUrl = credentials.baseUrl;
-          if (verseId) {
-            rpcUrl = rpcUrl.replace('mainnet', `verse-${verseId}`);
-          }
-
-          const callData = encodeContractCall('balanceOf', [userAddress]);
-
-          const options: any = {
-            method: 'POST',
-            url: rpcUrl,
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            json: true,
-            body: {
-              jsonrpc: '2.0',
-              method: 'eth_call',
-              params: [{
-                data: callData,
-              }, 'latest'],
-              id: generateTransactionId(),
-            },
-          };
-
-          result = await this.helpers.httpRequest(options) as any;
-
-          if (result.result) {
-            const balance = parseInt(result.result, 16);
-            result.assetCount = balance;
-            result.userAddress = userAddress;
-            result.verseId = verseId || 'mainnet';
-          }
-          break;
-        }
-
-        case 'burnAsset': {
-          const contractAddress = this.getNodeParameter('contractAddress', i) as string;
-          const tokenId = this.getNodeParameter('tokenId', i) as string;
-          const privateKey = this.getNodeParameter('privateKey', i) as string;
-
-          const txData = encodeContractCall('burn', [tokenId]);
-
-          const options: any = {
-            method: 'POST',
-            url: credentials.baseUrl,
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            json: true,
-            body: {
-              jsonrpc: '2.0',
-              method: 'eth_sendTransaction',
-              params: [{
-                to: contractAddress,
-                data: txData,
-                gas: '0x5208',
-                gasPrice: '0x9184e72a000',
-              }],
-              id: generateTransactionId(),
-            },
-          };
-
-          result = await this.helpers.httpRequest(options) as any;
-          break;
-        }
-
-        case 'getAssetHistory': {
-          const contractAddress = this.getNodeParameter('contractAddress', i) as string;
-          const tokenId = this.getNodeParameter('tokenId', i) as string;
-
-          const options: any = {
-            method: 'POST',
-            url: credentials.baseUrl,
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            json: true,
-            body: {
-              jsonrpc: '2.0',
-              method: 'eth_getLogs',
-              params: [{
-                address: contractAddress,
-                topics: [
-                  '0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef',
-                  null,
-                  null,
-                  '0x' + parseInt(tokenId).toString(16).padStart(64, '0')
-                ],
-                fromBlock: '0x0',
-                toBlock: 'latest'
-              }],
-              id: generateTransactionId(),
-            },
-          };
-
-          result = await this.helpers.httpRequest(options) as any;
-
-          if (result.result) {
-            result.transferHistory = result.result.map((log: any) => ({
-              transactionHash: log.transactionHash,
-              blockNumber: parseInt(log.blockNumber, 16),
-              from: '0x' + log.topics[1].slice(26),
-              to: '0x' + log.topics[2].slice(26),
-              tokenId: tokenId
-            }));
-          }
-          break;
-        }
-
-        default:
-          throw new NodeOperationError(this.getNode(), `Unknown operation: ${operation}`);
-      }
-
-      returnData.push({ json: result, pairedItem: { item: i } });
-    } catch (error: any) {
-      if (this.continueOnFail()) {
-        returnData.push({ 
-          json: { error: error.message }, 
-          pairedItem: { item: i } 
-        });
-      } else {
-        throw new NodeApiError(this.getNode(), error);
-      }
-    }
-  }
-
-  return returnData;
-}
+              'Authorization': credentials
